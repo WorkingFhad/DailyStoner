@@ -1,6 +1,6 @@
 /* @flow */
 import React, { Component } from 'react';
-import { View, Text, Image, ScrollView } from 'react-native';
+import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
 
 import styles from './styles';
 
@@ -9,7 +9,7 @@ const leaf = require('../../../../../assets/LeafRating.png');
 export default class ListSection extends Component {
     render() {
         return (
-            <ScrollView style={styles.lower}>
+            <ScrollView style={styles.lower} scrollEnabled={this.props.scroll}>
                 <View style={{ flex: 1 }}>
                     {[0, 1, 2, 3, 4, 5].map(l => this.renderListItem(l))}
                 </View>

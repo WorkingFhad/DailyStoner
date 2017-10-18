@@ -4,6 +4,15 @@ export default {
     upper: {
         flex: 1,
     },
+    leafWrapper: {
+        zIndex: - 1,
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        opacity: 0.8,
+    },
     leaf: {
         zIndex: - 1,
         position: 'absolute',
@@ -13,7 +22,6 @@ export default {
         bottom: 0,
         height: undefined,
         width: undefined,
-        opacity: 0.8,
     },
     menuSection: {
         flex: 1,

@@ -9,7 +9,7 @@ const leaf = require('../../../../../assets/LeafRating.png');
 export default class ListSection extends Component {
     render() {
         return (
-            <ScrollView style={styles.lower} scrollEnabled={this.props.scroll}>
+            <ScrollView style={styles.lower} scrollEnabled>
                 <View style={{ flex: 1 }}>
                     {[0, 1, 2, 3, 4, 5].map(l => this.renderListItem(l))}
                 </View>

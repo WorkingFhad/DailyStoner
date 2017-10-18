@@ -12,6 +12,7 @@ const DEVICE_HEIGHT = Dimensions.get('window').height;
 
 export default class Dashboard extends Component {
     state = {
+        scroll: true,
         chatHeight: new Animated.ValueXY({ x: 0, y: 300 }),
     };
 
@@ -21,12 +22,22 @@ export default class Dashboard extends Component {
             onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
             onMoveShouldSetPanResponder: (evt, gestureState) => true,
             onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
-            onPanResponderGrant: () => this.setState({ scroll: false }),
+            onPanResponderGrant: () => {
+                this.setState({ scroll: false });
+                this.state.chatHeight.setOffset({
+                    x: this.state.chatHeight.x._value,
+                    y: this.state.chatHeight.y._value,
+                });
+                this.state.chatHeight.setValue({ x: 0, y: 0 });
+            },
             onPanResponderMove: Animated.event([
                 null,
                 { dx: this.state.chatHeight.x, dy: this.state.chatHeight.y },
             ]),
-            onPanResponderRelease: () => this.setState({ scroll: true }),
+            onPanResponderRelease: () => {
+                this.setState({ scroll: true });
+                this.state.chatHeight.flattenOffset();
+            },
         });
     }
     render() {
@@ -52,8 +63,11 @@ export default class Dashboard extends Component {
                     />
                     <View style={styles.median} />
                 </Animated.View>
-                <Animated.View style={{ backgroundColor: 'orange', height: 1000 }}>
-                    <ListSection openList={this.openList} />
+                <Animated.View
+                    style={{ backgroundColor: 'orange', height: 1000 }}
+                    {...this._panResponder.panHandlers}
+                >
+                    <ListSection scroll={this.state.scroll} openList={this.openList} />
                 </Animated.View>
             </LinearGradient>
         );

@@ -1,6 +1,6 @@
 /* @flow */
 import React, { Component } from 'react';
-import { View, Text, SectionList, StatusBar } from 'react-native';
+import { View, Text, SectionList, Modal } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Font, LinearGradient } from 'expo';
 const roboto = require('../../../assets/Roboto-Bold.ttf');
@@ -19,8 +19,8 @@ export class Sessions extends Component {
         });
         this.setState({ fontLoaded: true });
     }
-    static navigationOptions = {
-        title: 'SESSIONS',
+    static navigationOptions = ({ navigation }) => ({
+        title: 'DailyStoner',
         headerStyle: {
             borderBottomColor: '#f0f0f0',
             borderBottomWidth: 0,
@@ -31,12 +31,19 @@ export class Sessions extends Component {
         },
         headerTitleStyle: {
             alignSelf: 'center',
-            fontSize: 18,
+            fontSize: 24,
             color: 'black',
             fontFamily: 'Georgia',
         },
-        headerLeft: <Ionicons name="ios-arrow-back" style={{ color: 'black', fontSize: 30 }} />,
-    };
+        headerLeft: <Ionicons name="ios-options" style={{ color: 'black', fontSize: 30 }} />,
+        headerRight: (
+            <Ionicons
+                onPress={() => navigation.navigate('Main')}
+                name="md-add"
+                style={{ color: 'black', fontSize: 30 }}
+            />
+        ),
+    });
 
     render() {
         if (! this.state.fontLoaded) {
@@ -59,30 +66,8 @@ export class Sessions extends Component {
                     justifyContent: 'space-between',
                     padding: 20,
                     paddingBottom: 10,
-                    // backgroundColor: '#62B98F',
                 }}
-            >
-                <Text
-                    style={{
-                        backgroundColor: 'transparent',
-                        fontFamily: 'Georgia',
-                        fontSize: 20,
-                        color: 'black',
-                    }}
-                >
-                    SESSIONS
-                </Text>
-                <Ionicons
-                    name="md-add"
-                    style={{
-                        backgroundColor: 'transparent',
-                        fontFamily: 'roboto',
-                        color: '#62B98F',
-                        fontSize: 28,
-                        top: 5,
-                    }}
-                />
-            </View>
+            />
         );
     }
 

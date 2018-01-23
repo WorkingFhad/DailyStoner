@@ -1,8 +1,9 @@
 /* @flow */
 import React, { Component } from 'react';
-import { View, Text, SectionList, Modal } from 'react-native';
+import { View, Text, SectionList, Modal, StatusBar, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Font, LinearGradient } from 'expo';
+import { Button, Fab, Icon } from 'native-base';
 const roboto = require('../../../assets/Roboto-Bold.ttf');
 const ubuntu = require('../../../assets/Ubuntu-Regular.ttf');
 const comfortaa = require('../../../assets/Comfortaa-Regular.ttf');
@@ -20,27 +21,27 @@ export class Sessions extends Component {
         this.setState({ fontLoaded: true });
     }
     static navigationOptions = ({ navigation }) => ({
-        title: 'DailyStoner',
+        title: 'SESSIONS',
         headerStyle: {
             borderBottomColor: '#f0f0f0',
             borderBottomWidth: 0,
             padding: 15,
             paddingTop: 35,
-            paddingBottom: 25,
-            backgroundColor: 'white',
+            paddingBottom: 35,
+            backgroundColor: '#596157',
         },
         headerTitleStyle: {
             alignSelf: 'center',
-            fontSize: 24,
-            color: 'black',
+            fontSize: 18,
+            color: 'white',
             fontFamily: 'Georgia',
         },
-        headerLeft: <Ionicons name="ios-options" style={{ color: 'black', fontSize: 30 }} />,
+        headerLeft: <Ionicons name="ios-options" style={{ color: 'white', fontSize: 30 }} />,
         headerRight: (
             <Ionicons
                 onPress={() => navigation.navigate('Main')}
                 name="md-add"
-                style={{ color: 'black', fontSize: 30 }}
+                style={{ color: 'white', fontSize: 30 }}
             />
         ),
     });
@@ -51,8 +52,10 @@ export class Sessions extends Component {
         }
         return (
             <View style={{ backgroundColor: 'white', flex: 1 }}>
+                <StatusBar barStyle="light-content" />
                 {/* {this.renderHeader()} */}
                 {this.renderList()}
+                {this.renderFAB()}
             </View>
         );
     }
@@ -81,8 +84,8 @@ export class Sessions extends Component {
                         // homogenous rendering between sections
                         {
                             data: [
-                                { hello: 'BONG', strain: 'Pineapple Cookies', color: 'purple' },
-                                { hello: 'VAPE', strain: 'Blueberry Haze', color: 'orange' },
+                                { hello: 'Bong', strain: 'Pineapple Cookies Marijuana', color: 'purple' },
+                                { hello: 'Vape', strain: 'Blueberry Haze', color: 'orange' },
                             ],
                             title: 'TODAY',
                         },
@@ -117,82 +120,103 @@ export class Sessions extends Component {
 
     renderListItem(item) {
         return (
-            <View
-                style={{
-                    padding: 20,
-                    paddingRight: 25,
-                    paddingTop: 25,
-                    paddingBottom: 20,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    marginLeft: 35,
-                    borderBottomWidth: item.item.color !== 'orange' ? 1 : 0,
-                    borderBottomColor: '#fafafa',
-                }}
-            >
+            <TouchableOpacity>
                 <View
                     style={{
-                        marginLeft: - 35,
-                        height: 10,
-                        width: 10,
-                        borderRadius: 100,
-                        backgroundColor: item.item.color,
-                        marginRight: 20,
-                    }}
-                />
-                <View
-                    style={{
+                        padding: 20,
+                        paddingRight: 25,
+                        paddingTop: 25,
+                        paddingBottom: 20,
                         flexDirection: 'row',
-                        alignItems: 'space-between',
-                        flex: 1,
+                        alignItems: 'center',
+                        marginLeft: 35,
+                        borderBottomWidth: item.item.color !== 'orange' ? 1 : 0,
+                        borderBottomColor: '#fafafa',
+                        justifyContent: 'flex-start',
                     }}
                 >
-                    <View style={{ flex: 1 }}>
-                        <Text
-                            style={{
-                                color: 'black',
-                                fontSize: 16,
-                            }}
-                        >
-                            {item.item.strain}
-                        </Text>
-                        <Text
-                            style={{
-                                color: 'darkgrey',
-                                fontSize: 10,
-                                fontFamily: 'Helvetica',
-                                paddingTop: 3,
-                            }}
-                        >
-                            {item.item.hello}
-                        </Text>
-                    </View>
-                    <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                        <View>
+                    <View
+                        style={{
+                            marginLeft: - 35,
+                            height: 12,
+                            width: 12,
+                            borderRadius: 100,
+                            backgroundColor: item.item.color,
+                            marginRight: 20,
+                        }}
+                    />
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            alignItems: 'space-between',
+                            flex: 1,
+                            alignItems: 'center',
+                        }}
+                    >
+                        <View style={{ flex: 2 }}>
                             <Text
                                 style={{
-                                    fontSize: 12,
-                                    fontFamily: 'Helvetica',
-                                    color: 'black',
+                                    color: '#596157',
+                                    fontSize: 20,
+                                    fontFamily: 'Georgia',
                                 }}
                             >
+                                {item.item.strain}
+                            </Text>
+                            <Text
+                                style={{
+                                    color: '#B1841D',
+                                    fontSize: 12,
+                                    fontFamily: 'Helvetica',
+                                    paddingTop: 3,
+                                }}
+                            >
+                            ★ ★ ★ ★
+                        </Text>
+                        </View>
+                        <View style={{ flex: 1, alignItems: 'flex-end', alignSelf: 'flex-start' }}>
+                            <View>
+                                <Text
+                                    style={{
+                                        fontSize: 14,
+                                        fontFamily: 'Helvetica',
+                                        color: 'gray',
+                                    }}
+                                >
                                 3:15 PM
                             </Text>
-                        </View>
-                        <View>
-                            <Text
-                                style={{
-                                    fontSize: 12,
-                                    fontFamily: 'Helvetica',
-                                    color: 'gray',
-                                }}
-                            >
-                                ★★★★
-                            </Text>
+                            </View>
+                            <View>
+                                <Text
+                                    style={{
+                                        fontSize: 14,
+                                        fontFamily: 'Helvetica',
+                                        color: 'gray',
+                                        paddingTop: 5,
+                                    }}
+                                >
+                                    {item.item.hello}
+                                </Text>
+                            </View>
                         </View>
                     </View>
                 </View>
-            </View>
+            </TouchableOpacity>
+        );
+    }
+
+    renderFAB() {
+        return (
+            <Fab
+                active={this.state.active}
+                direction="up"
+                containerStyle={{ }}
+                style={{ backgroundColor: '#596157' }}
+                position="bottomRight"
+                onPress={() => this.props.navigation.navigate('Main')}
+            >
+                <Icon name="md-add" />
+            </Fab>
         );
     }
 
@@ -200,15 +224,15 @@ export class Sessions extends Component {
         return (
             <View
                 style={{
-                    backgroundColor: 'white',
+                    backgroundColor: '#FCFCFA',
                     borderBottomWidth: 1,
                     borderBottomColor: '#fafafa',
                 }}
             >
                 <Text
                     style={{
-                        padding: 20,
-                        paddingBottom: 7,
+                        padding: 15,
+                        paddingBottom: 8,
                         fontFamily: 'roboto',
                         color: 'black',
                         fontSize: 14,

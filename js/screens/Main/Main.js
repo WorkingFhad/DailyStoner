@@ -1,8 +1,11 @@
 /* @flow */
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import { Font } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
+// import Chat from '../Chat';
+// import Dashboard from '../Dashboard';
+// import Home from '../Home';
 
 const roboto = require('../../../assets/Roboto-Bold.ttf');
 
@@ -11,27 +14,27 @@ export class Main extends Component {
         fontLoaded: false,
     };
     static navigationOptions = ({ navigation }) => ({
-        title: 'October 21st',
+        title: 'NEW SESH',
         headerStyle: {
             borderBottomColor: '#f0f0f0',
             borderBottomWidth: 0,
             padding: 15,
             paddingTop: 35,
-            paddingBottom: 25,
-            backgroundColor: 'white',
+            paddingBottom: 35,
+            backgroundColor: '#596157',
         },
         headerTitleStyle: {
             alignSelf: 'center',
             fontSize: 20,
-            color: 'black',
+            color: 'white',
             fontFamily: 'Georgia',
         },
-        headerLeft: null,
+        headerLeft: <Ionicons name="ios-arrow-back" style={{ color: 'white', fontSize: 30 }} onPress={() => navigation.goBack()} />,
         headerRight: (
             <Ionicons
-                onPress={() => navigation.goBack()}
+                onPress={() => Alert.alert('Are you sure?')}
                 name="md-close"
-                style={{ color: 'black', fontSize: 30 }}
+                style={{ color: 'white', fontSize: 30 }}
             />
         ),
     });
@@ -43,7 +46,6 @@ export class Main extends Component {
     }
 
     render() {
-        return <View style={{ flex: 1, backgroundColor: 'white' }} />;
         if (! this.state.fontLoaded) {
             return null;
         }
@@ -70,7 +72,7 @@ export class Main extends Component {
                             margin: 20,
                         }}
                     >
-                        SESSIONS
+                        {/* SESSIONS */}
                     </Text>
                 </TouchableOpacity>
                 <View
@@ -96,7 +98,7 @@ export class Main extends Component {
                                 color: 'black',
                             }}
                         >
-                            START SESH
+                            {/* START SESH */}
                         </Text>
                     </TouchableOpacity>
                 </View>

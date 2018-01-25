@@ -36,11 +36,11 @@ export class Sessions extends Component {
             color: 'white',
             fontFamily: 'Georgia',
         },
-        headerLeft: <Ionicons name="ios-options" style={{ color: 'white', fontSize: 30 }} />,
+        headerLeft: <Ionicons name="md-menu" style={{ color: 'white', fontSize: 30 }} />,
         headerRight: (
             <Ionicons
                 onPress={() => navigation.navigate('Main')}
-                name="md-add"
+                name="md-stats"
                 style={{ color: 'white', fontSize: 30 }}
             />
         ),
@@ -84,7 +84,7 @@ export class Sessions extends Component {
                         // homogenous rendering between sections
                         {
                             data: [
-                                { hello: 'Bong', strain: 'Pineapple Cookies Marijuana', color: 'purple' },
+                                { hello: 'Bong', strain: 'Pineapple Cookies', color: 'purple' },
                                 { hello: 'Vape', strain: 'Blueberry Haze', color: 'orange' },
                             ],
                             title: 'TODAY',

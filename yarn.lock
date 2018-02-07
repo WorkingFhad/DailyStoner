@@ -26,6 +26,12 @@
     babel-runtime "^6.23.0"
     exec-async "^2.2.0"
 
+"@expo/react-native-action-sheet@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@expo/react-native-action-sheet/-/react-native-action-sheet-0.4.0.tgz#a16e434fdc2e3e8c71c62ac4d9e34b020044dba7"
+  dependencies:
+    hoist-non-react-statics "^1.2.0"
+
 "@expo/react-native-action-sheet@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@expo/react-native-action-sheet/-/react-native-action-sheet-1.0.1.tgz#c02f36688a1e4f8dc60890ff3c734944af541c6b"
@@ -7156,6 +7162,10 @@ react-modal@^2.3.2:
   dependencies:
     exenv "^1.2.0"
     prop-types "^15.5.10"
+
+react-native-actionsheet@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-actionsheet/-/react-native-actionsheet-2.3.0.tgz#a9552a356dc5939829062353804d5e5609e8f969"
 
 react-native-branch@2.0.0-beta.3:
   version "2.0.0-beta.3"

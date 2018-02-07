@@ -1,11 +1,11 @@
 /* @flow */
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Alert, Keyboard, Dimensions } from 'react-native';
-import { GiftedChat } from 'react-native-gifted-chat';
+import { View, Text, TouchableOpacity, Alert, TextInput, Dimensions, Modal, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { Button } from 'native-base';
-import { Font } from 'expo';
+import { Font, BlurView } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import Carousel from 'react-native-snap-carousel';
+import ActionSheet from 'react-native-actionsheet';
 
 const sliderWidth = Dimensions.get('window').width;
 // import Chat from '../Chat';
@@ -16,11 +16,23 @@ const roboto = require('../../../assets/Roboto-Bold.ttf');
 
 const buttonStyle = { backgroundColor: 'white', padding: 30, width: 300, alignItems: 'center', marginTop: 10 };
 
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        backgroundColor: 'grey',
+    },
+    innerContainer: {
+        alignItems: 'center',
+    },
+});
 
 export class Main extends Component {
-    state = {
-        fontLoaded: false,
-    };
+
     static navigationOptions = ({ navigation }) => ({
         title: 'NEW SESH',
         headerStyle: {
@@ -46,14 +58,19 @@ export class Main extends Component {
             />
         ),
     });
+
+    state = {
+        fontLoaded: false,
+        // modalVisible: false,
+    };
+
     async componentDidMount() {
         await Font.loadAsync({
             roboto,
         });
 
         this.setState({ fontLoaded: true });
-
-        Keyboard.reveal();
+        // this.openModal();
     }
 
     render() {
@@ -63,73 +80,45 @@ export class Main extends Component {
 
         return (
             <View style={{ flex: 1 }}>
-                {/* {this.renderBanner()} */}
                 <View style={{ flex: 1, justifyContent: 'space-between', paddingTop: 20, backgroundColor: '#fff' }}>
                     {this.renderFirstMessage()}
                     {this.renderChoices()}
-                    {/* {this.renderChoices2()} */}
+                    <ActionSheet
+                        ref={o => this.ActionSheet = o}
+                        options={['Add New', 'Cancel']}
+                        cancelButtonIndex={1}
+                        onPress={this.handlePress}
+                    />
                 </View>
             </View>
         );
     }
 
-    renderBanner() {
+    renderBlur() {
+        if (! this.state.modalVisible) {
+            return null;
+        }
+
         return (
-            <View style={{ padding: 10, paddingTop: 20, paddingBottom: 20, backgroundColor: '#FCFCFA' }}>
-                <Text style={{ fontSize: 14, textAlign: 'center' }}>Answer the questions below to begin your session</Text>
-            </View>
+            <BlurView intensity={70} tint="dark" style={[StyleSheet.absoluteFill, { zIndex: 100 }]} />
         );
     }
 
     renderFirstMessage() {
+        const text = {
+            fontSize: 16,
+        };
         return (
             <View style={{ padding: 20 }}>
                 <View style={{ backgroundColor: '#f6f6f5', maxWidth: 250, padding: 20, paddingTop: 15, paddingBottom: 15, borderRadius: 10, borderBottomLeftRadius: 0 }}>
-                    <Text>Hey Josh, Good to see you again! What are we having this evening?</Text>
+                    <Text style={text}>Hey Josh, Good to see you again! What are we having this evening?</Text>
                 </View>
                 <View style={{ backgroundColor: '#ebebea', maxWidth: 250, padding: 20, paddingTop: 15, paddingBottom: 15, marginTop: 20, borderRadius: 10, borderBottomRightRadius: 0, alignSelf: 'flex-end' }}>
-                    <Text>Sour Diesel</Text>
+                    <Text style={text}>Sour Diesel</Text>
                 </View>
                 <View style={{ backgroundColor: '#f6f6f5', maxWidth: 250, padding: 20, paddingTop: 15, paddingBottom: 15, marginTop: 20, borderRadius: 10, borderBottomLeftRadius: 0, alignSelf: 'flex-start' }}>
-                    <Text>Awesome! How are you consuming the Sour Diesel?</Text>
+                    <Text style={text}>Awesome! How are you consuming the Sour Diesel?</Text>
                 </View>
-            </View>
-        );
-    }
-
-    renderChoices2() {
-        const listItem = {
-            alignItems: 'center',
-            padding: 16,
-            borderColor: '#ebebea',
-            borderWidth: 1,
-            margin: 5,
-            marginTop: 0,
-            shadowOpacity: 0.1,
-            shadowOffset: {
-                width: 0,
-                height: 0,
-            },
-        };
-        const text = {
-            fontSize: 14,
-            color: '#596157',
-            fontFamily: 'roboto',
-        };
-        return (
-            <View style={{ padding: 10 }}>
-                <TouchableOpacity style={listItem}>
-                    <Text style={text}>Bong</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={listItem}>
-                    <Text style={text}>Vaporizer</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={listItem}>
-                    <Text style={text}>Joint</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={listItem}>
-                    <Text style={text}>Other</Text>
-                </TouchableOpacity>
             </View>
         );
     }
@@ -140,6 +129,7 @@ export class Main extends Component {
             { name: 'Vape' },
             { name: 'Joint' },
             { name: 'Dab' },
+            { name: 'Other' },
         ];
         return (
             <View style={{ flexDirection: 'row', backgroundColor: 'white', paddingBottom: 15 }}>
@@ -170,11 +160,32 @@ export class Main extends Component {
             alignSelf: 'flex-end',
             marginRight: 10,
         };
+        if (item.name === 'Other') {
+            return (
+                <TouchableOpacity style={[listItem, { backgroundColor: 'green' }]} onPress={this.showActionSheet}>
+                    <Text>{item.name}</Text>
+                </TouchableOpacity>
+            );
+        }
         return (
             <TouchableOpacity style={listItem} onPress={() => console.log(item.name)}>
                 <Text>{item.name}</Text>
             </TouchableOpacity>
         );
+    }
+
+    showActionSheet = () => {
+        this.ActionSheet.show();
+    }
+
+    handlePress = (index) => {
+        switch (index) {
+        case 0:
+            this.goTo('NewDetail');
+            break;
+        default:
+            break;
+        }
     }
 
     goTo(route) {

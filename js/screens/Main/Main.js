@@ -8,9 +8,6 @@ import Carousel from 'react-native-snap-carousel';
 import ActionSheet from 'react-native-actionsheet';
 
 const sliderWidth = Dimensions.get('window').width;
-// import Chat from '../Chat';
-// import Dashboard from '../Dashboard';
-// import Home from '../Home';
 
 const roboto = require('../../../assets/Roboto-Bold.ttf');
 

@@ -4,6 +4,8 @@ import { View, Text, SectionList, Modal, StatusBar, TouchableOpacity } from 'rea
 import { Ionicons } from '@expo/vector-icons';
 import { Font, LinearGradient } from 'expo';
 import { Button, Fab, Icon } from 'native-base';
+import { connect } from 'react-redux';
+
 const roboto = require('../../../assets/Roboto-Bold.ttf');
 const ubuntu = require('../../../assets/Ubuntu-Regular.ttf');
 const comfortaa = require('../../../assets/Comfortaa-Regular.ttf');
@@ -78,41 +80,10 @@ export class Sessions extends Component {
         return (
             <View style={{ flex: 1 }}>
                 <SectionList
+                    keyExtractor={(key, index) => index}
                     renderItem={item => this.renderListItem(item)}
                     renderSectionHeader={section => this.renderListHeader(section)}
-                    sections={[
-                        // homogenous rendering between sections
-                        {
-                            data: [
-                                { hello: 'Bong', strain: 'Pineapple Cookies', color: 'purple' },
-                                { hello: 'Vape', strain: 'Blueberry Haze', color: 'orange' },
-                            ],
-                            title: 'TODAY',
-                        },
-                        {
-                            data: [
-                                { hello: 'DAB', strain: 'Pineapple Express', color: 'green' },
-                                { hello: 'DAB', strain: 'Lemon Berry', color: 'orange' },
-                            ],
-                            title: 'YESTERDAY',
-                        },
-                        {
-                            data: [
-                                { hello: 'DAB', strain: 'OG God Bud', color: 'purple' },
-                                { hello: 'DAB', strain: 'Trainwreck', color: 'green' },
-                                { hello: 'DAB', strain: 'Blueberry Haze', color: 'orange' },
-                            ],
-                            title: 'NOVEMBER 14TH',
-                        },
-                        {
-                            data: [
-                                { hello: 'DAB', strain: 'OG God Bud', color: 'purple' },
-                                { hello: 'DAB', strain: 'Trainwreck', color: 'green' },
-                                { hello: 'DAB', strain: 'Blueberry Haze', color: 'orange' },
-                            ],
-                            title: 'NOVEMBER 13TH',
-                        },
-                    ]}
+                    sections={this.props.sessions.data}
                 />
             </View>
         );
@@ -120,7 +91,7 @@ export class Sessions extends Component {
 
     renderListItem(item) {
         return (
-            <TouchableOpacity key={item}>
+            <TouchableOpacity>
                 <View
                     style={{
                         padding: 20,
@@ -245,4 +216,8 @@ export class Sessions extends Component {
     }
 }
 
-export default Sessions;
+const mapStateToProps = state => ({
+    sessions: state.sessions,
+});
+
+export default connect(mapStateToProps, null)(Sessions);

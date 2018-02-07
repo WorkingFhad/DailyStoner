@@ -16,7 +16,8 @@ export default function configureStore(): any {
         name: Env.instanceName,
         hostname: Env.hostname || 'localhost',
         port: 5678,
-        realtime: __DEV__,
+        realtime: true,
+        suppressConnectErrors: false,
     });
 
     store = createStore(

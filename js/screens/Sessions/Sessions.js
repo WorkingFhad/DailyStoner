@@ -120,7 +120,7 @@ export class Sessions extends Component {
 
     renderListItem(item) {
         return (
-            <TouchableOpacity>
+            <TouchableOpacity key={item}>
                 <View
                     style={{
                         padding: 20,

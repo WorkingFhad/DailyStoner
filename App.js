@@ -1,7 +1,11 @@
 import React from 'react';
-import Dashboard from './js/screens/Dashboard';
-import Home from './js/screens/Home';
-import Navigator from './js/navigators/Navigator';
+import { Provider } from 'react-redux';
 
-// export default () => <Home />;
-export default () => <Navigator />;
+import Navigator from './js/navigators/Navigator';
+import configureStore from './js/state/store';
+
+export default () => (
+    <Provider store={configureStore()}>
+        <Navigator />
+    </Provider>
+);

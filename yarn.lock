@@ -942,6 +942,12 @@ babel-plugin-react-transform@2.0.2:
   dependencies:
     lodash "^4.6.1"
 
+babel-plugin-react-transform@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-react-transform/-/babel-plugin-react-transform-3.0.0.tgz#402f25137b7bb66e9b54ead75557dfbc7ecaaa74"
+  dependencies:
+    lodash "^4.6.1"
+
 babel-plugin-syntax-async-functions@^6.13.0, babel-plugin-syntax-async-functions@^6.5.0, babel-plugin-syntax-async-functions@^6.8.0:
   version "6.13.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-syntax-async-functions/-/babel-plugin-syntax-async-functions-6.13.0.tgz#cad9cad1191b5ad634bf30ae0872391e0647be95"
@@ -1592,14 +1598,15 @@ babel-preset-minify@^0.2.0:
     babel-plugin-transform-undefined-to-void "^6.8.3"
     lodash.isplainobject "^4.0.6"
 
-babel-preset-react-native@^1.9.2:
-  version "1.9.2"
-  resolved "https://registry.yarnpkg.com/babel-preset-react-native/-/babel-preset-react-native-1.9.2.tgz#b22addd2e355ff3b39671b79be807e52dfa145f2"
+babel-preset-react-native@4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/babel-preset-react-native/-/babel-preset-react-native-4.0.0.tgz#3df80dd33a453888cdd33bdb87224d17a5d73959"
   dependencies:
     babel-plugin-check-es2015-constants "^6.5.0"
-    babel-plugin-react-transform "2.0.2"
+    babel-plugin-react-transform "^3.0.0"
     babel-plugin-syntax-async-functions "^6.5.0"
     babel-plugin-syntax-class-properties "^6.5.0"
+    babel-plugin-syntax-dynamic-import "^6.18.0"
     babel-plugin-syntax-flow "^6.5.0"
     babel-plugin-syntax-jsx "^6.5.0"
     babel-plugin-syntax-trailing-function-commas "^6.5.0"
@@ -1624,6 +1631,7 @@ babel-preset-react-native@^1.9.2:
     babel-plugin-transform-react-jsx "^6.5.0"
     babel-plugin-transform-react-jsx-source "^6.5.0"
     babel-plugin-transform-regenerator "^6.5.0"
+    babel-template "^6.24.1"
     react-transform-hmr "^1.0.4"
 
 babel-preset-react-native@^2.0.0, babel-preset-react-native@^2.1.0:
@@ -7448,7 +7456,7 @@ react-proxy@^1.1.7:
     lodash "^4.6.1"
     react-deep-force-update "^1.0.0"
 
-react-redux@^5.0.2:
+react-redux@^5.0.2, react-redux@^5.0.6:
   version "5.0.6"
   resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-5.0.6.tgz#23ed3a4f986359d68b5212eaaa681e60d6574946"
   dependencies:
@@ -7532,15 +7540,14 @@ react-tween-state@^0.1.5:
     raf "^3.1.0"
     tween-functions "^1.0.1"
 
-react@16.0.0-alpha.12:
-  version "16.0.0-alpha.12"
-  resolved "https://registry.yarnpkg.com/react/-/react-16.0.0-alpha.12.tgz#8c59485281485df319b6f77682d8dd0621c08194"
+react@16.2.0:
+  version "16.2.0"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.2.0.tgz#a31bd2dab89bff65d42134fa187f24d054c273ba"
   dependencies:
-    create-react-class "^15.5.2"
-    fbjs "^0.8.9"
+    fbjs "^0.8.16"
     loose-envify "^1.1.0"
-    object-assign "^4.1.0"
-    prop-types "^15.5.6"
+    object-assign "^4.1.1"
+    prop-types "^15.6.0"
 
 read-chunk@^2.0.0:
   version "2.1.0"
@@ -7667,6 +7674,10 @@ redux-saga-test-plan@^3.0.2:
     object-assign "^4.1.0"
     util-inspect "^0.1.8"
 
+redux-saga@^0.16.0:
+  version "0.16.0"
+  resolved "https://registry.yarnpkg.com/redux-saga/-/redux-saga-0.16.0.tgz#0a231db0a1489301dd980f6f2f88d8ced418f724"
+
 redux@^3.6.0, redux@^3.7.2:
   version "3.7.2"
   resolved "https://registry.yarnpkg.com/redux/-/redux-3.7.2.tgz#06b73123215901d25d065be342eb026bc1c8537b"
@@ -7740,7 +7751,7 @@ remote-redux-devtools-on-debugger@^0.7.1:
     minimist "^1.2.0"
     remotedev-server "^0.2.2"
 
-remote-redux-devtools@^0.5.11:
+remote-redux-devtools@^0.5.12:
   version "0.5.12"
   resolved "https://registry.yarnpkg.com/remote-redux-devtools/-/remote-redux-devtools-0.5.12.tgz#42cb95dfa9e54c1d9671317c5e7bba41e68caec2"
   dependencies:
@@ -7757,7 +7768,7 @@ remotedev-serialize@^0.1.0:
   dependencies:
     jsan "^3.1.0"
 
-remotedev-server@^0.2.2, remotedev-server@^0.2.3:
+remotedev-server@^0.2.2, remotedev-server@^0.2.4:
   version "0.2.4"
   resolved "https://registry.yarnpkg.com/remotedev-server/-/remotedev-server-0.2.4.tgz#b019b015132064cd76024cb91eb026801f24cd67"
   dependencies:

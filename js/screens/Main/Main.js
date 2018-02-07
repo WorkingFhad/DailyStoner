@@ -162,13 +162,13 @@ export class Main extends Component {
         };
         if (item.name === 'Other') {
             return (
-                <TouchableOpacity style={[listItem, { backgroundColor: 'green' }]} onPress={this.showActionSheet}>
-                    <Text>{item.name}</Text>
+                <TouchableOpacity key={index} style={[listItem, { backgroundColor: '#596157' }]} onPress={this.showActionSheet}>
+                    <Text style={{ color: 'white', fontWeight: 'bold' }}>...</Text>
                 </TouchableOpacity>
             );
         }
         return (
-            <TouchableOpacity style={listItem} onPress={() => console.log(item.name)}>
+            <TouchableOpacity key={index} style={listItem} onPress={() => console.log(item.name)}>
                 <Text>{item.name}</Text>
             </TouchableOpacity>
         );

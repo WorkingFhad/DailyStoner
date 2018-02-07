@@ -59,23 +59,13 @@ export class Main extends Component {
         ),
     });
 
-    state = {
-        fontLoaded: false,
-    };
-
-    async componentDidMount() {
-        await Font.loadAsync({
-            roboto,
-        });
-
-        this.setState({ fontLoaded: true });
+    componentDidMount() {
+        setTimeout(() => {
+            this.flatList.scrollToEnd({ animated: true });
+        }, 200);
     }
 
     render() {
-        if (! this.state.fontLoaded) {
-            return null;
-        }
-
         return (
             <View style={{ flex: 1 }}>
                 <View style={{ flex: 1, justifyContent: 'space-between', backgroundColor: '#fff' }}>
@@ -99,7 +89,7 @@ export class Main extends Component {
                 onContentSizeChange={() => this.flatList.scrollToEnd({ animated: true })}
                 onLayout={() => this.flatList.scrollToEnd({ animated: true })}
                 keyExtractor={item => item.id}
-                style={{ padding: 20, paddingTop: 0 }}
+                style={{ padding: 20, paddingTop: 0, flex: 1 }}
                 data={this.props.session.chat}
                 renderItem={this.renderMessage}
             />

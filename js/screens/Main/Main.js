@@ -140,18 +140,11 @@ export class Main extends Component {
     }
 
     renderChoices() {
-        const choices = [
-            { name: 'Bong' },
-            { name: 'Vape' },
-            { name: 'Joint' },
-            { name: 'Dab' },
-            { name: 'Other' },
-        ];
         return (
             <View style={{ flexDirection: 'row', backgroundColor: 'white', paddingBottom: 15 }}>
                 <Carousel
                     ref={(c) => { this._carousel = c; }}
-                    data={choices}
+                    data={[...this.props.assets.methods, 'Other']}
                     renderItem={this.renderItem}
                     sliderWidth={sliderWidth}
                     itemWidth={100}
@@ -176,7 +169,7 @@ export class Main extends Component {
             alignSelf: 'flex-end',
             marginRight: 10,
         };
-        if (item.name === 'Other') {
+        if (item === 'Other') {
             return (
                 <TouchableOpacity key={index} style={[listItem, { backgroundColor: '#596157' }]} onPress={this.showActionSheet}>
                     <Text style={{ color: 'white', fontWeight: 'bold' }}>...</Text>
@@ -185,7 +178,7 @@ export class Main extends Component {
         }
         return (
             <TouchableOpacity key={index} style={listItem} onPress={() => this.sendMessage(item)}>
-                <Text>{item.name}</Text>
+                <Text>{item}</Text>
             </TouchableOpacity>
         );
     }
@@ -193,7 +186,7 @@ export class Main extends Component {
     sendMessage = (item) => {
         const message = {
             id: Math.random(),
-            message: item.name,
+            message: item,
             user: 1,
         };
 
@@ -220,6 +213,7 @@ export class Main extends Component {
 }
 
 const mapStateToProps = state => ({
+    assets: state.assets,
     session: state.session,
 });
 

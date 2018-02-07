@@ -2,6 +2,9 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, Keyboard } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { connect } from 'react-redux';
+
+import * as assetsModule from '../../state/modules/assets';
 
 class NewDetail extends Component<*, *> {
     static navigationOptions = ({ navigation }) => ({
@@ -22,6 +25,10 @@ class NewDetail extends Component<*, *> {
             fontFamily: 'Georgia',
         },
     });
+
+    state = {
+        detail: '',
+    }
 
     componentDidMount() {
         this.myTextInput.focus();
@@ -69,12 +76,30 @@ class NewDetail extends Component<*, *> {
                     <Text style={styles.title}>Enter consumption method</Text>
                     <Text style={styles.title2}>i.e Vape</Text>
                     <View style={styles.textBox}>
-                        <TextInput style={{ marginTop: 60, fontSize: 18, fontFamily: 'Georgia' }} placeholder="Consumption Method" ref={(ref) => { this.myTextInput = ref; }} onSubmitEditing={() => this.props.navigation.goBack()} returnKeyType="done" />
+                        <TextInput
+                            style={{ marginTop: 60, fontSize: 18, fontFamily: 'Georgia' }}
+                            placeholder="Consumption Method"
+                            ref={(ref) => { this.myTextInput = ref; }}
+                            onSubmitEditing={this.done}
+                            returnKeyType="done"
+                            onChangeText={detail => this.setState({ detail })}
+                        />
                     </View>
                 </View>
             </View>
         );
     }
+
+    done = () => {
+        const name = this.state.detail;
+        this.props.addMethod(name);
+        Keyboard.dismiss();
+        this.props.navigation.goBack();
+    }
 }
 
-export default NewDetail;
+const mapDispatchToProps = dispatch => ({
+    addMethod: method => dispatch(assetsModule.addMethod(method)),
+});
+
+export default connect(null, mapDispatchToProps)(NewDetail);

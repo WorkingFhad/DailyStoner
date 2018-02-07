@@ -1,11 +1,14 @@
 /* @flow */
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Alert, TextInput, Dimensions, Modal, StyleSheet, KeyboardAvoidingView } from 'react-native';
+import { View, Text, TouchableOpacity, Alert, ScrollView, Dimensions, FlatList, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { Button } from 'native-base';
 import { Font, BlurView } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import Carousel from 'react-native-snap-carousel';
 import ActionSheet from 'react-native-actionsheet';
+import { connect } from 'react-redux';
+
+import * as sessionModule from '../../state/modules/session';
 
 const sliderWidth = Dimensions.get('window').width;
 
@@ -58,7 +61,6 @@ export class Main extends Component {
 
     state = {
         fontLoaded: false,
-        // modalVisible: false,
     };
 
     async componentDidMount() {
@@ -67,7 +69,6 @@ export class Main extends Component {
         });
 
         this.setState({ fontLoaded: true });
-        // this.openModal();
     }
 
     render() {
@@ -77,8 +78,8 @@ export class Main extends Component {
 
         return (
             <View style={{ flex: 1 }}>
-                <View style={{ flex: 1, justifyContent: 'space-between', paddingTop: 20, backgroundColor: '#fff' }}>
-                    {this.renderFirstMessage()}
+                <View style={{ flex: 1, justifyContent: 'space-between', backgroundColor: '#fff' }}>
+                    {this.renderMessages()}
                     {this.renderChoices()}
                     <ActionSheet
                         ref={o => this.ActionSheet = o}
@@ -91,31 +92,49 @@ export class Main extends Component {
         );
     }
 
-    renderBlur() {
-        if (! this.state.modalVisible) {
-            return null;
-        }
-
+    renderMessages() {
         return (
-            <BlurView intensity={70} tint="dark" style={[StyleSheet.absoluteFill, { zIndex: 100 }]} />
+            <FlatList
+                ref={ref => this.flatList = ref}
+                onContentSizeChange={() => this.flatList.scrollToEnd({ animated: true })}
+                onLayout={() => this.flatList.scrollToEnd({ animated: true })}
+                keyExtractor={item => item.id}
+                style={{ padding: 20, paddingTop: 0 }}
+                data={this.props.session.chat}
+                renderItem={this.renderMessage}
+            />
         );
     }
 
-    renderFirstMessage() {
+    renderMessage = (item) => {
+        const chat = item.item;
+        if (chat.user === 0) {
+            return this.renderBotMessage(chat);
+        }
+
+        return this.renderUserMessage(chat);
+    }
+
+    renderBotMessage = (chat) => {
         const text = {
             fontSize: 16,
         };
+
         return (
-            <View style={{ padding: 20 }}>
-                <View style={{ backgroundColor: '#f6f6f5', maxWidth: 250, padding: 20, paddingTop: 15, paddingBottom: 15, borderRadius: 10, borderBottomLeftRadius: 0 }}>
-                    <Text style={text}>Hey Josh, Good to see you again! What are we having this evening?</Text>
-                </View>
-                <View style={{ backgroundColor: '#ebebea', maxWidth: 250, padding: 20, paddingTop: 15, paddingBottom: 15, marginTop: 20, borderRadius: 10, borderBottomRightRadius: 0, alignSelf: 'flex-end' }}>
-                    <Text style={text}>Sour Diesel</Text>
-                </View>
-                <View style={{ backgroundColor: '#f6f6f5', maxWidth: 250, padding: 20, paddingTop: 15, paddingBottom: 15, marginTop: 20, borderRadius: 10, borderBottomLeftRadius: 0, alignSelf: 'flex-start' }}>
-                    <Text style={text}>Awesome! How are you consuming the Sour Diesel?</Text>
-                </View>
+            <View key={chat.id} style={{ backgroundColor: '#f6f6f5', maxWidth: 250, padding: 20, paddingTop: 15, paddingBottom: 15, borderRadius: 10, marginTop: 20, borderBottomLeftRadius: 0 }}>
+                <Text style={text}>{chat.message}</Text>
+            </View>
+        );
+    }
+
+    renderUserMessage = (chat, index) => {
+        const text = {
+            fontSize: 16,
+        };
+
+        return (
+            <View key={chat.id} style={{ backgroundColor: '#ebebea', maxWidth: 250, padding: 20, paddingTop: 15, paddingBottom: 15, borderRadius: 10, marginTop: 20, borderBottomRightRadius: 0, alignSelf: 'flex-end' }}>
+                <Text style={text}>{chat.message}</Text>
             </View>
         );
     }
@@ -165,10 +184,20 @@ export class Main extends Component {
             );
         }
         return (
-            <TouchableOpacity key={index} style={listItem} onPress={() => console.log(item.name)}>
+            <TouchableOpacity key={index} style={listItem} onPress={() => this.sendMessage(item)}>
                 <Text>{item.name}</Text>
             </TouchableOpacity>
         );
+    }
+
+    sendMessage = (item) => {
+        const message = {
+            id: Math.random(),
+            message: item.name,
+            user: 1,
+        };
+
+        this.props.sendMessage(message);
     }
 
     showActionSheet = () => {
@@ -190,5 +219,12 @@ export class Main extends Component {
     }
 }
 
+const mapStateToProps = state => ({
+    session: state.session,
+});
 
-export default Main;
+const mapDispatchToProps = dispatch => ({
+    sendMessage: message => dispatch(sessionModule.sendMessage(message)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

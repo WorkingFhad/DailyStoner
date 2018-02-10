@@ -150,7 +150,6 @@ export class Main extends Component {
     renderItem = ({ item, index }) => {
         const listItem = {
             backgroundColor: '#ebebea',
-            maxWidth: 250,
             padding: 30,
             paddingTop: 15,
             paddingBottom: 15,

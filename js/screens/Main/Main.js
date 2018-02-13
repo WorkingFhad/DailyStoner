@@ -1,7 +1,6 @@
 /* @flow */
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Alert, ScrollView, Dimensions, FlatList, StyleSheet, KeyboardAvoidingView } from 'react-native';
-import { Button } from 'native-base';
 import { Font, BlurView } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import Carousel from 'react-native-snap-carousel';
